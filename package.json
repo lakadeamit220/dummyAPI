@@ -11,6 +11,12 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
+    "docx": "^9.3.0",
+    "docxtemplater": "^3.60.2",
+    "file-saver": "^2.0.5",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.1",
+    "jszip": "^3.10.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

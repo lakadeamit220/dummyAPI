@@ -1,9 +1,12 @@
 import "./App.css";
+import DummyJSON from "./components/DummyJSON";
+import JSONPlaceholder from "./components/JSONPlaceholder";
 
 function App() {
   return (
     <>
-      <h1>Vite + React</h1>
+      {/* <DummyJSON /> */}
+      <JSONPlaceholder />
     </>
   );
 }
