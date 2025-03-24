@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import { saveAs } from "file-saver";
-import { Document, Packer, Paragraph, Table, TableCell, TableRow, TextRun } from "docx";
+import {
+  Document,
+  Packer,
+  Paragraph,
+  Table,
+  TableCell,
+  TableRow,
+  TextRun,
+} from "docx";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
 export default function JSONPlaceholder() {
@@ -22,54 +30,155 @@ export default function JSONPlaceholder() {
   }, []);
 
   const downloadDocx = () => {
-    // Create table rows
     const tableRows = posts.map((post) => {
       return new TableRow({
         children: [
-          new TableCell({ children: [new Paragraph(post.id.toString())] }),
-          new TableCell({ children: [new Paragraph(post.title)] }),
-          new TableCell({ children: [new Paragraph(post.body)] }),
+          new TableCell({
+            children: [
+              new Paragraph({
+                text: post.id.toString(),
+                style: "TableCellText",
+              }),
+            ],
+            shading: {
+              fill: "FFFFFF",
+            },
+          }),
+          new TableCell({
+            children: [
+              new Paragraph({
+                text: post.title,
+                style: "TableCellText",
+              }),
+            ],
+            shading: {
+              fill: "FFFFFF",
+            },
+          }),
+          new TableCell({
+            children: [
+              new Paragraph({
+                text: post.body,
+                style: "TableCellText",
+              }),
+            ],
+            shading: {
+              fill: "FFFFFF",
+            },
+          }),
         ],
       });
     });
-
-    // Create a document
+  
     const doc = new Document({
+      styles: {
+        paragraphStyles: [
+          {
+            id: "TitleText",
+            name: "Title Text",
+            basedOn: "Normal",
+            next: "Normal",
+            run: {
+              size: 48, // Font size in half-points
+              bold: true,
+              color: "007BFF", // Bootstrap primary color
+            },
+            paragraph: {
+              alignment: "center",
+              spacing: { after: 300 },
+            },
+          },
+          {
+            id: "TableHeaderText",
+            name: "Table Header Text",
+            basedOn: "Normal",
+            next: "Normal",
+            run: {
+              bold: true,
+              color: "FFFFFF",
+              size: 24,
+            },
+            paragraph: {
+              alignment: "center",
+            },
+          },
+          {
+            id: "TableCellText",
+            name: "Table Cell Text",
+            basedOn: "Normal",
+            next: "Normal",
+            run: {
+              size: 24,
+            },
+            paragraph: {
+              spacing: { after: 200 },
+            },
+          },
+        ],
+      },
       sections: [
         {
           children: [
             new Paragraph({
-              children: [new TextRun({ text: "Posts", bold: true, size: 28 })],
-              heading: "Heading1",
+              text: "Posts",
+              style: "TitleText",
             }),
             new Table({
               rows: [
                 new TableRow({
                   children: [
                     new TableCell({
-                      children: [new Paragraph({ text: "ID", bold: true })],
+                      children: [
+                        new Paragraph({
+                          text: "ID",
+                          style: "TableHeaderText",
+                        }),
+                      ],
+                      shading: {
+                        fill: "343A40", // Bootstrap dark color
+                      },
                     }),
                     new TableCell({
-                      children: [new Paragraph({ text: "Title", bold: true })],
+                      children: [
+                        new Paragraph({
+                          text: "Title",
+                          style: "TableHeaderText",
+                        }),
+                      ],
+                      shading: {
+                        fill: "343A40",
+                      },
                     }),
                     new TableCell({
-                      children: [new Paragraph({ text: "Body", bold: true })],
+                      children: [
+                        new Paragraph({
+                          text: "Body",
+                          style: "TableHeaderText",
+                        }),
+                      ],
+                      shading: {
+                        fill: "343A40",
+                      },
                     }),
                   ],
                 }),
                 ...tableRows,
               ],
+              width: {
+                size: 100,
+                type: "pct", // Table width set to 100% of the page
+              },
             }),
           ],
         },
       ],
     });
-
-    // Save the document
+  
     Packer.toBlob(doc).then((blob) => {
       saveAs(blob, "Posts.docx");
     });
   };
+  
 
   if (loading) {
     return <p className="text-center mt-5">Loading...</p>;

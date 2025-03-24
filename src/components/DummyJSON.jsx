@@ -14,23 +14,43 @@ export default function DummyJSON() {
   }, []);
 
   const downloadPDF = () => {
-    const input = document.getElementById('table-container');
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      const imgWidth = 190;
-      const pageHeight = 297;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let position = 0;
+  const input = document.getElementById('table-container');
+  const scale = 2; // Scale for better resolution
 
+  html2canvas(input, {
+    scale: scale, // Increase scale for higher resolution
+    useCORS: true, // Enable cross-origin resource sharing if needed
+  }).then((canvas) => {
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const imgWidth = 190; // Width of the image in the PDF (adjust as needed)
+    const pageHeight = 297; // Height of an A4 page in mm
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    let position = 0;
+
+    // Split the content into multiple pages if it exceeds one page
+    if (imgHeight > pageHeight) {
+      let remainingHeight = imgHeight;
+      while (remainingHeight > 0) {
+        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, Math.min(remainingHeight, pageHeight));
+        remainingHeight -= pageHeight;
+        if (remainingHeight > 0) {
+          pdf.addPage(); // Add a new page for remaining content
+          position = 0;
+        }
+      }
+    } else {
       pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-      pdf.save('todos.pdf');
-    });
-  };
+    }
+
+    pdf.save('todos.pdf');
+  });
+};
+
 
   return (
     <div className="container mt-5">
-      <h1 className="text-center mb-4" style={{ color: '#007bff' }}>ToDo's</h1>
+      <h1 className="text-center mb-4" style={{ color: '#007bff' }}>ToDo's(Bootstrap,html2canvas,jspdf)</h1>
       <div id="table-container">
         <table className="table table-bordered table-hover table-striped">
           <thead className="thead-dark">
