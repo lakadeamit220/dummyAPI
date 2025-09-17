@@ -12,7 +12,7 @@ function App() {
       {/* <InlineCSSDemo /> */}
       {/* <JSONPlaceholder /> */}
       {/* <GeneratePDFData /> */}
-      {/* <AirCleaner /> */}
+      <AirCleaner />
     </>
   );
 }
