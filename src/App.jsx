@@ -1,6 +1,7 @@
 import "./App.css";
 import YukaYantraDashboard from "./components/Air_C";
 import YukaYantraReport from "./components/Air_Chat";
+import AirCleaningDashboard from "./components/Air_G";
 import DummyJSON from "./components/DummyJSON";
 import GeneratePDFData from "./components/GeneratePDFData";
 import InlineCSSDemo from "./components/InlineCSSDemo";
@@ -16,7 +17,8 @@ function App() {
       {/* <GeneratePDFData /> */}
       {/* <AirCleaner /> */}
       {/* <YukaYantraReport/> */}
-      <YukaYantraDashboard/>
+      {/* <YukaYantraDashboard/> */}
+      <AirCleaningDashboard />
     </>
   );
 }
