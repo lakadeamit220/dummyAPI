@@ -1,4 +1,5 @@
 import "./App.css";
+import YukaYantraReport from "./components/Air_Chat";
 import DummyJSON from "./components/DummyJSON";
 import GeneratePDFData from "./components/GeneratePDFData";
 import InlineCSSDemo from "./components/InlineCSSDemo";
@@ -12,7 +13,8 @@ function App() {
       {/* <InlineCSSDemo /> */}
       {/* <JSONPlaceholder /> */}
       {/* <GeneratePDFData /> */}
-      <AirCleaner />
+      {/* <AirCleaner /> */}
+      <YukaYantraReport/>
     </>
   );
 }
