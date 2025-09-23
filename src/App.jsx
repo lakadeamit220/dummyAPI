@@ -16,9 +16,7 @@ function App() {
       {/* <JSONPlaceholder /> */}
       {/* <GeneratePDFData /> */}
       {/* <AirCleaner /> */}
-      {/* <YukaYantraReport/> */}
-      {/* <YukaYantraDashboard/> */}
-      <AirCleaningDashboard />
+      <YukaYantraReport/>
     </>
   );
 }
